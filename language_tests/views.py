@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpRequest
-from django.views import View, CreateView, DeleteView, ListView, DetailView
+from django.views.generic import View, CreateView, DeleteView, ListView, DetailView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
 
-from . import forms, models
+from language_tests.forms import LanguageForm, QuestionForm
+from language_tests.models import Language, Question
 
 
 class HomeView(View):
@@ -55,6 +56,7 @@ class AdminDeleteLanguageView(AdminMixin, DeleteView):
     model = models.Language
     success_url = 'dashboard'
 
+
 class AdminAddQuestionView(AdminMixin, CreateView):
     model = models.Question
     form_class = forms.QuestionForm
@@ -71,6 +73,6 @@ class AdminQuestionsView(AdminMixin, ListView):
     template_name = ''  # TODO: write html template
 
 
-class AdminDeleteQuestionView(AdminMixin, DelteView):
+class AdminDeleteQuestionView(AdminMixin, DeleteView):
     model = models.Question
     success_url = reverse_lazy('dashboard')
