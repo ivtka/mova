@@ -1,0 +1,11 @@
+{% block title %} Вхід {% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Увійти</button>
+</form>
+
+{% endblock %}
