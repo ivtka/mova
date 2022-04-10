@@ -12,7 +12,7 @@ class Language(models.Model):
 class Level(models.Model):
     LEVELS = (('A1', 'A1'), ('A2', 'A2'), ('B1', 'B1'),
               ('B2', 'B2'), ('C1', 'C1'), ('C2', 'C2'))
-    level = models.CharField(unique=true, max_length=2, choices=LEVELS)
+    level = models.CharField(unique=True, max_length=2, choices=LEVELS)
 
 
 class Question(models.Model):
