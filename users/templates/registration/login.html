@@ -1,11 +1,27 @@
+{% extends 'base.html' %}
+
 {% block title %} Вхід {% endblock %}
 
 {% block content %}
 
-<form method="post">
+<form method="post" class="text-center">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button>Увійти</button>
+
+    {{ form.non_field_errors }}
+    <div class="mb-6">
+        {{ form.username.errors }}
+        <label for="{{ form.username.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">Ім'я
+            користувача</label>
+        {{ form.username }}
+    </div>
+    <div class="mb-6">
+        {{ form.password.errors }}
+        <label for="{{ form.password.id_for_label }}"
+            class="block mb-2 text-sm font-medium text-gray-900">Пароль</label>
+        {{ form.password }}
+    </div>
+    <button type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Увійти</button>
 </form>
 
 {% endblock %}
