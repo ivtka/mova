@@ -11,8 +11,8 @@ from language_tests.models import Language, Question
 class HomeView(View):
     def get(self, request: HttpRequest):
         if request.user.is_authenticated:
-            return HttpResponseRedirect('redirection')
-        return render(request, '')  # TODO: write html template
+            return HttpResponseRedirect('dashboard')
+        return render(request, 'index.html')
 
 
 class DashboardView(View):
@@ -33,8 +33,8 @@ class AdminDashboardView(AdminMixin, View):
 
 
 class AdminAddLanguageView(AdminMixin, CreateView):
-    model = models.Language
-    form_class = forms.LanguageForm
+    model = Language
+    form_class = LanguageForm
     template_name = ''  # TODO: write html template for form
     success_url = reverse_lazy('dashboard')
 
@@ -43,23 +43,23 @@ class AdminAddLanguageView(AdminMixin, CreateView):
 
 
 class AdminLanguagesView(AdminMixin, ListView):
-    model = models.Language
+    model = Language
     template_name = ''  # TODO: write html template for list
 
 
 class AdminLanguageView(AdminMixin, DetailView):
-    model = models.Language
+    model = Language
     template_name = ''  # TODO: write html template for language
 
 
 class AdminDeleteLanguageView(AdminMixin, DeleteView):
-    model = models.Language
+    model = Language
     success_url = 'dashboard'
 
 
 class AdminAddQuestionView(AdminMixin, CreateView):
-    model = models.Question
-    form_class = forms.QuestionForm
+    model = Question
+    form_class = QuestionForm
     template_name = ''  # TODO: write html template for add question
     success_url = reverse_lazy('dashboard')
 
@@ -69,10 +69,10 @@ class AdminAddQuestionView(AdminMixin, CreateView):
 
 
 class AdminQuestionsView(AdminMixin, ListView):
-    model = models.Question
+    model = Question
     template_name = ''  # TODO: write html template
 
 
 class AdminDeleteQuestionView(AdminMixin, DeleteView):
-    model = models.Question
+    model = Question
     success_url = reverse_lazy('dashboard')
