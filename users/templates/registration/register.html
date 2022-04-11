@@ -1,11 +1,59 @@
+{% extends 'base.html' %}
+
 {% block title %} Реєстрація {% endblock %}
 
 {% block content %}
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button>Зареєструватися</button>
+
+    {{ form.non_field_errors }}
+    <div class="grid xl:grid-cols-2 xl:gap-6">
+        <div class="mb-6">
+            {{ form.first_name.errors }}
+            <label for="{{ form.first_name.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">Ваше
+                ім'я</label>
+            {{ form.first_name }}
+        </div>
+        <div class="mb-6">
+            {{ form.last_name.errors }}
+            <label for="{{ form.last_name.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">Ваше
+                прізвище</label>
+            {{ form.last_name }}
+        </div>
+    </div>
+
+    <div class="mb-6">
+        {{ form.email.errors }}
+        <label for="{{ form.email.id_for_label }} block mb-2 text-sm font-medium text-gray-900">Ваша пошта</label>
+        {{ form.email }}
+    </div>
+    <div class="mb-6">
+        {{ form.password1.errors }}
+        <label for="{{ form.password1.id_for_label }} block mb-2 text-sm font-medium text-gray-900">Ваш пароль</label>
+        {{ form.password1 }}
+    </div>
+    <div class="mb-6">
+        {{ form.password2.errors }}
+        <label for="{{ form.password2.id_for_label }} block mb-2 text-sm font-medium text-gray-900">Підтвертдіть
+            пароль</label>
+        {{ form.password2 }}
+    </div>
+
+    <div class="flex items-start mb-6">
+        <div class="flex items-center h-5">
+            <input id="terms" aria-describedby="terms" type="checkbox"
+                class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                required>
+        </div>
+        <div class="ml-3 text-sm">
+            <label for="terms" class="font-medium text-gray-900 dark:text-gray-300">Я погоджуюсь з <a href="#"
+                    class="text-blue-600 hover:underline dark:text-blue-500"> умовами використання.</a></label>
+        </div>
+    </div>
+    <button type="submit"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register
+        new account</button>
 </form>
 
 {% endblock %}
