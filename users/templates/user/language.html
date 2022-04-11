@@ -1,9 +1,12 @@
 {% extends 'index.html' %}
 
+{% load static %}
+
 {% block title %} {{ language.language_name }} {% endblock %}
 
 {% block content %}
 
-<a href="{% url 'take-test' language.pk %}">Take Test</a>
+<h1 class="text-center font-bold text-sm">{{ language.language_name }} <a
+                href="{% url 'start_test' language.id %}">Start test</a></h1>
 
 {% endblock %}
