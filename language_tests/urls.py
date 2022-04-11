@@ -4,5 +4,5 @@ from language_tests.views import HomeView, DashboardView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
-    path('redirection', DashboardView.as_view(), name='redirection')
+    path('dashboard', DashboardView.as_view(), name='dashboard')
 ]
