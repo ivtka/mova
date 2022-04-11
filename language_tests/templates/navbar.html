@@ -33,6 +33,10 @@
                     {% if user.is_superuser %}
                     <li>
                         <a href="{% url 'admin-dashboard' %}"
+                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Панель Керування</a>
+                    </li>
+                    <li>
+                        <a href="/admin"
                             class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Налаштування</a>
                     </li>
                     {% endif %}
