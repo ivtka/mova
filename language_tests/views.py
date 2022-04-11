@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, HttpRequest
-from django.views.generic import View, CreateView, DeleteView, ListView, DetailView
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import HttpRequest, HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  View)
 
 from language_tests.forms import LanguageForm, QuestionForm
 from language_tests.models import Language, Question
@@ -29,13 +30,13 @@ class AdminMixin(UserPassesTestMixin):
 
 class AdminDashboardView(AdminMixin, View):
     def get(self, request: HttpRequest):
-        return render(request, '')  # TODO: write html template
+        return render(request, 'admin/dashboard.html')
 
 
 class AdminAddLanguageView(AdminMixin, CreateView):
     model = Language
     form_class = LanguageForm
-    template_name = ''  # TODO: write html template for form
+    template_name = 'index.html'  # TODO: write html template for form
     success_url = reverse_lazy('dashboard')
 
     def form_valid(self, form):
@@ -44,12 +45,12 @@ class AdminAddLanguageView(AdminMixin, CreateView):
 
 class AdminLanguagesView(AdminMixin, ListView):
     model = Language
-    template_name = ''  # TODO: write html template for list
+    template_name = 'index.html'  # TODO: write html template for list
 
 
 class AdminLanguageView(AdminMixin, DetailView):
     model = Language
-    template_name = ''  # TODO: write html template for language
+    template_name = 'index.html'  # TODO: write html template for language
 
 
 class AdminDeleteLanguageView(AdminMixin, DeleteView):
@@ -60,7 +61,7 @@ class AdminDeleteLanguageView(AdminMixin, DeleteView):
 class AdminAddQuestionView(AdminMixin, CreateView):
     model = Question
     form_class = QuestionForm
-    template_name = ''  # TODO: write html template for add question
+    template_name = 'index.html'  # TODO: write html template for add question
     success_url = reverse_lazy('dashboard')
 
     def form_valid(self, form):
@@ -70,7 +71,7 @@ class AdminAddQuestionView(AdminMixin, CreateView):
 
 class AdminQuestionsView(AdminMixin, ListView):
     model = Question
-    template_name = ''  # TODO: write html template
+    template_name = 'index.html'  # TODO: write html template
 
 
 class AdminDeleteQuestionView(AdminMixin, DeleteView):
