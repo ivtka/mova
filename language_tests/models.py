@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Language(models.Model):
-    language_name = models.CharField(max_length=50)
+    language_name = models.CharField(max_length=50, unique=True)
     max_questions = models.PositiveIntegerField()
 
     def __str__(self) -> str:
