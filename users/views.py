@@ -18,7 +18,7 @@ class UserDashboardView(generic.ListView):
     model = Language
 
 
-class StartTestView(generic.DetailView):
+class StartTestView(generic.FormView):
     model = Language
     context_object_name = 'test_context'
     template_name = 'user/start-test.html'

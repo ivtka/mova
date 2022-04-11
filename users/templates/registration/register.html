@@ -24,6 +24,13 @@
     </div>
 
     <div class="mb-6">
+        {{ form.username.errors }}
+        <label for="{{ form.username.id_for_label }} block mb-2 text-sm font-medium text-gray-900">Ваше ім'я
+            користувача</label>
+        {{ form.username }}
+    </div>
+
+    <div class="mb-6">
         {{ form.email.errors }}
         <label for="{{ form.email.id_for_label }} block mb-2 text-sm font-medium text-gray-900">Ваша пошта</label>
         {{ form.email }}
