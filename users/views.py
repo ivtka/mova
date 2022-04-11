@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse_lazy
 from django.http import HttpRequest
-from language_tests.models import Language, Question
+from django.contrib.auth.mixins import UserPassesTestMixin
 
+from language_tests.models import Language, Question
 from users.forms import SignUpForm
 
 
@@ -13,12 +14,20 @@ class UserRegisterView(generic.CreateView):
     success_url = reverse_lazy('login')
 
 
-class UserDashboardView(generic.ListView):
+class UserMixin(UserPassesTestMixin):
+    def test_func(self):
+        return not self.request.user.is_superuser
+
+class UserDashboardView(UserMixin, generic.ListView):
     template_name = 'user/dashboard.html'
     model = Language
 
 
-class StartTestView(generic.FormView):
+class LanguageView(UserMixin, generic.DetailView):
+    template_name = 'user/language.html'
+    model = Language
+
+class StartTestView(UserMixin, generic.FormView):
     model = Language
     context_object_name = 'test_context'
     template_name = 'user/start-test.html'
@@ -30,7 +39,7 @@ class StartTestView(generic.FormView):
         return context
 
 
-class TakeTestView(generic.FormView):
+class TakeTestView(UserMixin, generic.FormView):
     model = Language
     template_name = 'user/take-test.html'
 
@@ -49,10 +58,10 @@ class TakeTestView(generic.FormView):
 
 
 # TODO: Finish View for Calculate level
-class CalculateLevelView(generic.View):
+class CalculateLevelView(UserMixin, generic.View):
     pass
 
 
-class ResultView(generic.ListView):
+class ResultView(UserMixin, generic.ListView):
     model = Language
     template_name = 'user/result.html'

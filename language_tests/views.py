@@ -45,12 +45,12 @@ class AdminAddLanguageView(AdminMixin, CreateView):
 
 class AdminLanguagesView(AdminMixin, ListView):
     model = Language
-    template_name = 'index.html'  # TODO: write html template for list
+    template_name = 'admin/languages.html'
 
 
 class AdminLanguageView(AdminMixin, DetailView):
     model = Language
-    template_name = 'index.html'  # TODO: write html template for language
+    template_name = 'admin/language.html'
 
 
 class AdminDeleteLanguageView(AdminMixin, DeleteView):
