@@ -6,7 +6,7 @@ from language_tests.models import Language, Question, Level
 class LanguageForm(forms.ModelForm):
     class Meta:
         model = Language
-        fields = ['language_name', 'question_number']
+        fields = ['language_name', 'max_questions']
 
 
 class QuestionForm(forms.ModelForm):

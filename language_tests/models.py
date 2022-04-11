@@ -2,9 +2,10 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
+
 class Language(models.Model):
     language_name = models.CharField(max_length=50)
-    question_number = models.PositiveIntegerField()
+    max_questions = models.PositiveIntegerField()
 
     def __str__(self) -> str:
         return self.language_name
