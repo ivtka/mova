@@ -36,7 +36,7 @@ class AdminDashboardView(AdminMixin, View):
 class AdminAddLanguageView(AdminMixin, CreateView):
     model = Language
     form_class = LanguageForm
-    template_name = 'index.html'  # TODO: write html template for form
+    template_name = 'admin/add-language.html'
     success_url = reverse_lazy('dashboard')
 
     def form_valid(self, form):
@@ -61,7 +61,7 @@ class AdminDeleteLanguageView(AdminMixin, DeleteView):
 class AdminAddQuestionView(AdminMixin, CreateView):
     model = Question
     form_class = QuestionForm
-    template_name = 'index.html'  # TODO: write html template for add question
+    template_name = 'admin/add-question.html'
     success_url = reverse_lazy('dashboard')
 
     def form_valid(self, form):
