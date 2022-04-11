@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+{% for language in object_list %}
+
+<div>
+    <a href="{% url 'language' language.pk ">{{ language.language_name }}</a>
+</div>
+
+{% endfor %}
+
+{% endblock %}
