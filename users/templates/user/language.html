@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+
+{% block title %} {{ language.language_name }} {% endblock %}
+
+{% block content %}
+
+<a href="{% url 'start-test' language.pk %}">Start Test</a>
+<a href="{% url 'take-test' language.pk %}">Take Test</a>
+
+{% endblock %}
