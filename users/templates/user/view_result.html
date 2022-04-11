@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for result in object_list %}
+
+<div>
+    {{ result.level }} - {{ result.date }}
+</div>
+
+{% endfor %}
+
+{% endblock %}
