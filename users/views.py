@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 import logging
+from django.contrib.auth.decorators import user_passes_test
+
 
 from language_tests.models import Language, Level, Question, Result
 from users.forms import SignUpForm
@@ -31,6 +33,10 @@ class LanguageView(UserMixin, generic.DetailView):
     model = Language
 
 
+def is_user(user):
+    return not user.is_superuser
+
+@user_passes_test(is_user)
 def start_test(request, pk):
     language = Language.objects.get(id=pk)
     questions = language.get_questions()
@@ -41,7 +47,7 @@ def start_test(request, pk):
 
     return response
 
-
+@user_passes_test(is_user)
 def calculate_level_view(request):
     if request.COOKIES.get('language_id') is not None:
         langauge_id = request.COOKIES.get('language_id')
