@@ -5,10 +5,11 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 import logging
+from django.http import HttpRequest
 from django.contrib.auth.decorators import user_passes_test
 
 
-from language_tests.models import Language, Level, Question, Result
+from language_tests.models import Language, Level, Result
 from users.forms import SignUpForm
 
 
@@ -36,6 +37,7 @@ class LanguageView(UserMixin, generic.DetailView):
 def is_user(user):
     return not user.is_superuser
 
+
 @user_passes_test(is_user)
 def start_test(request, pk):
     language = Language.objects.get(id=pk)
@@ -46,6 +48,7 @@ def start_test(request, pk):
     response.set_cookie('language_id', language.id)
 
     return response
+
 
 @user_passes_test(is_user)
 def calculate_level_view(request):
@@ -83,3 +86,7 @@ def calculate_level_view(request):
 class ResultView(UserMixin, generic.ListView):
     model = Result
     template_name = 'user/view_result.html'
+    context_object_name = 'results'
+
+    def get_queryset(self):
+        return Result.objects.filter(user=self.request.user).order_by('-date')
