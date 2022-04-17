@@ -26,7 +26,6 @@ class Level(models.Model):
 
 class Question(models.Model):
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    level = models.ForeignKey(Level, on_delete=models.CASCADE)
     question = models.CharField(max_length=600)
     option1 = models.CharField(max_length=200)
     option2 = models.CharField(max_length=200)
