@@ -5,7 +5,6 @@ from users.views import (LanguageView, ResultView, UserDashboardView, UserRegist
 
 urlpatterns = [
     path('register/', UserRegisterView.as_view(), name='register'),
-    path('activate/<uidb64>/<token>/', activate_view, name='activate'),
     path('dashboard/', UserDashboardView.as_view(), name='user-dashboard'),
     path('dashboard/language/<int:pk>/', LanguageView.as_view(), name='language'),
     path('dashboard/language/start-test/<int:pk>/',
