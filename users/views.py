@@ -4,13 +4,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
-import logging
 from django.http import HttpRequest
 from django.contrib.auth.decorators import user_passes_test
-
+from django.core.mail import send_mail
 
 from language_tests.models import Language, Level, Result
 from users.forms import SignUpForm
+
 
 
 class UserRegisterView(generic.CreateView):
@@ -51,13 +51,16 @@ def start_test(request, pk):
 
 
 @user_passes_test(is_user)
-def calculate_level_view(request):
+def calculate_level_view(request: HttpRequest):
     if request.COOKIES.get('language_id') is not None:
-        save_level_result(request)
+        result = save_level_result(request)
 
-        return HttpResponseRedirect('view-result')
+        send_mail('Ваш результ з тесту', str(result.level), 'movasite@gmail.com', [request.user.email],
+                  fail_silently=False)
 
-    return HttpResponseRedirect('dashboard')
+        return HttpResponseRedirect('/users/view-result')
+
+    return HttpResponseRedirect('/users/dashboard')
 
 
 def save_level_result(request):
@@ -73,6 +76,8 @@ def save_level_result(request):
     result.language = language
     result.user = user
     result.save()
+
+    return result
 
 
 def calculate_level(request, language):
