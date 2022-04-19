@@ -8,6 +8,7 @@ import logging
 from django.http import HttpRequest
 from django.contrib.auth.decorators import user_passes_test
 
+from django.core.mail import send_mail
 
 from language_tests.models import Language, Level, Result
 from users.forms import SignUpForm
@@ -51,9 +52,12 @@ def start_test(request, pk):
 
 
 @user_passes_test(is_user)
-def calculate_level_view(request):
+def calculate_level_view(request: HttpRequest):
     if request.COOKIES.get('language_id') is not None:
-        save_level_result(request)
+        result = save_level_result(request)
+
+        send_mail('Ваш результ з тесту', str(result.level), 'movasite@gmail.com', [request.user.get_email_field_name()],
+                  fail_silently=False)
 
         return HttpResponseRedirect('view-result')
 
@@ -73,6 +77,8 @@ def save_level_result(request):
     result.language = language
     result.user = user
     result.save()
+
+    return result
 
 
 def calculate_level(request, language):
