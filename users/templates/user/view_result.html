@@ -4,11 +4,12 @@
 
 <div class="p-4 max-w-md bg-white rounded-lg border shadow-md sm:p-8">
     <div class="flex justify-between items-center mb-4">
-        <h5 class="text-xl font-bold leading-none text-gray-900">Результати</h5>
+        <h5 class="flex text-xl font-bold leading-none text-gray-900 justify-between items-center">Результати</h5>
+        <h5 class="flex text-xl font-bold leading-none text-gray-900 justify-between items-center">Середній рівень {{ results.average }}</h5>
     </div>
     <div class="flow-root">
         <ul role="list" class="divide-y dividige-gray-200">
-            {% for result in results %}
+            {% for result in results.results %}
 
             <li class="py-3 sm:py-4">
                 <div class="flex items-center space-x-4">
