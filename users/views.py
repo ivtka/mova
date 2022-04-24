@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.db.models import Avg
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -7,6 +8,7 @@ from django.views import generic
 from django.http import HttpRequest
 from django.contrib.auth.decorators import user_passes_test
 from django.core.mail import send_mail
+from statistics import mode
 
 from language_tests.models import Language, Level, Result
 from users.forms import SignUpForm
@@ -116,4 +118,11 @@ class ResultView(UserMixin, generic.ListView):
     context_object_name = 'results'
 
     def get_queryset(self):
-        return Result.objects.filter(user=self.request.user).order_by('-date')
+        results = Result.objects.filter(user=self.request.user).order_by('-date')        
+        return {'results': results, 'average': self.frequence()}
+
+    def frequence(self):
+        tmp = [row['level'] for row in Result.objects.values('level')]
+        level = mode(tmp)
+        levels = {1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2'}
+        return levels[level]
