@@ -1,16 +1,9 @@
-FROM tiangolo/uwsgi-nginx:python3.9
-
-ENV LISTEN_PORT=8000
-EXPOSE 8000
-
-ENV UWSGI_INI uwsgi.ini
-
-ENV STATIC_URL /app/static
-
+FROM python:3
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 WORKDIR /app
-ADD . /app 
+COPY requirements.txt /app/
+RUN pip install -r requirements.txt
+COPY . /app/
 
-RUN chmod g+w /app 
-RUN chmod g+w /app/db.sqlite3 
-
-RUN python3 -m pip install -r requirement.txt
+CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
