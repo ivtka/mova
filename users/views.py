@@ -66,8 +66,8 @@ def calculate_level_view(request: HttpRequest):
 
 
 def save_level_result(request):
-    langauge_id = request.COOKIES.get('language_id')
-    language = Language.objects.get(id=langauge_id)
+    language_id = request.COOKIES.get('language_id')
+    language = Language.objects.get(id=language_id)
 
     results = calculate_level(request, language)
 
