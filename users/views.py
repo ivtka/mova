@@ -1,18 +1,17 @@
+from statistics import mode
+
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.db.models import Avg
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.http import HttpRequest
-from django.contrib.auth.decorators import user_passes_test
-from django.core.mail import send_mail
-from statistics import mode
-
 from language_tests.models import Language, Level, Result
-from users.forms import SignUpForm
 
+from users.forms import SignUpForm
 
 
 class UserRegisterView(generic.CreateView):
@@ -110,6 +109,7 @@ def get_level(scores: int) -> str:
         return 'C1'
     elif 74 <= scores <= 77:
         return 'C2'
+    return 'A1'
 
 
 class ResultView(UserMixin, generic.ListView):
@@ -118,7 +118,8 @@ class ResultView(UserMixin, generic.ListView):
     context_object_name = 'results'
 
     def get_queryset(self):
-        results = Result.objects.filter(user=self.request.user).order_by('-date')        
+        results = Result.objects.filter(
+            user=self.request.user).order_by('-date')
         return {'results': results, 'average': self.frequence()}
 
     def frequence(self):
