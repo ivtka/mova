@@ -4,8 +4,9 @@
 
 {% for language in object_list %}
 
-<div>
-    <a href="{% url 'language' language.pk %}">{{ language.language_name }}</a>
+<div class="m-auto flex flex-wrap flex-col">
+    <a href="{% url 'language' language.pk %}">Start {{ language.language_name }} test</a>
+    <a href="{% url 'view-result' %}">See Results</a>
 </div>
 
 {% endfor %}

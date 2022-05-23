@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %} {{ language.language_name }} {% endblock %}
+
+{% block content %}
+
+<div class="p-4 max-w-full bg-white rounded-lg border shadow-md sm:p-8">
+  <div class="flex flex-wrap flex-col">
+    <h5 class="flex text-xl font-bold leading-none text-gray-900 justify-between items-center">Результат</h5>
+    <h5 class="flex text-xl font-bold leading-none text-gray-900 justify-between items-center">
+      {{ result.level }} - {{ precentage }}% you need to achive next level
+    </h5>
+    <a href="{% url 'view-result' %}">See All Results</a>
+</div>
+</div>
+
+{% endblock %}

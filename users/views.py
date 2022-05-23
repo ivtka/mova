@@ -1,4 +1,5 @@
 from statistics import mode
+from typing import Tuple
 
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -54,12 +55,14 @@ def start_test(request, pk):
 @user_passes_test(is_user)
 def calculate_level_view(request: HttpRequest):
     if request.COOKIES.get('language_id') is not None:
-        result = save_level_result(request)
+        result, precentage = save_level_result(request)
 
         send_mail('Ваш результ з тесту', str(result.level), 'movasite@gmail.com', [request.user.email],
                   fail_silently=False)
 
-        return HttpResponseRedirect('/users/view-result')
+        response = render(request, 'user/result.html',
+                          {'result': result, 'precentage': precentage})
+        return response
 
     return HttpResponseRedirect('/users/dashboard')
 
@@ -73,12 +76,14 @@ def save_level_result(request):
     user = User.objects.get(pk=request.user.id)
     result = Result()
 
-    result.level = Level.objects.get(level=get_level(results))
+    level, precentage = get_level(results)
+
+    result.level = Level.objects.get(level=level)
     result.language = language
     result.user = user
     result.save()
 
-    return result
+    return (result, precentage)
 
 
 def calculate_level(request, language):
@@ -96,23 +101,33 @@ def calculate_level(request, language):
     return results
 
 
-def get_level(scores: int) -> str:
-    if 1 <= scores <= 20:
-        return 'A1'
-    elif 21 <= scores <= 36:
-        return 'A2'
-    elif 37 <= scores <= 48:
-        return 'B1'
-    elif 49 <= scores <= 58:
-        return 'B2'
-    elif 59 <= scores <= 73:
-        return 'C1'
-    elif 74 <= scores <= 77:
-        return 'C2'
-    return 'A1'
+def get_level(scores: int) -> Tuple[str, int]:
+    level = 'A1'
+    precentage = 100
+
+    if scores >= 1 and scores <= 20:
+        level = 'A1'
+        precentage = scores / 20 * 100
+    elif scores >= 21 and scores <= 36:
+        level = 'A2'
+        precentage = (scores - 20) / 16 * 100
+    elif scores >= 37 and scores <= 48:
+        level = 'B1'
+        precentage = (scores - 36) / 12 * 100
+    elif scores >= 49 and scores <= 58:
+        level = 'B2'
+        precentage = (scores - 48) / 10 * 100
+    elif scores >= 59 and scores <= 73:
+        level = 'C1'
+        precentage = (scores - 58) / 8 * 100
+    elif scores >= 74 and scores <= 77:
+        level = 'C2'
+        precentage = (scores - 73) / 5 * 100
+
+    return (level, precentage)
 
 
-class ResultView(UserMixin, generic.ListView):
+class ResultsView(UserMixin, generic.ListView):
     model = Result
     template_name = 'user/view_result.html'
     context_object_name = 'results'
