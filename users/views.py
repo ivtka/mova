@@ -124,7 +124,7 @@ def get_level(scores: int) -> Tuple[str, int]:
         level = 'C2'
         precentage = (scores - 73) / 5 * 100
 
-    return (level, precentage)
+    return (level, 100 - precentage)
 
 
 class ResultsView(UserMixin, generic.ListView):
