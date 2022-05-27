@@ -11,81 +11,83 @@
 
 {% block content %}
 
-<form class="mt-3 mb-3" id="test-form" onsubmit="return saveAnswers();" action="/users/calculate-level/" method="post"
-    autocomplete="off">
-    {% csrf_token %}
+<div class="container mx-auto w-1/2">
+    <form class="mt-3 mb-3" id="test-form" onsubmit="return saveAnswers();" action="/users/calculate-level/"
+        method="post" autocomplete="off">
+        {% csrf_token %}
 
-    <h2 class="text-align">Тест з мови: {{ language.language_name }}</h2>
+        <h2 class="text-align">Тест з мови: {{ language.language_name }}</h2>
 
-    {% for q in questions %}
+        {% for q in questions %}
 
-    <fieldset>
-        <legend class="sr-only">{{ q.question }}</legend>
+        <fieldset>
+            <legend class="sr-only">{{ q.question }}</legend>
 
-        <h3 class="leading-10">{{ forloop.counter}}. {{ q.question }}</h3>
+            <h3 class="leading-10">{{ forloop.counter}}. {{ q.question }}</h3>
 
-        <div class="flex items-center mb-4">
-            <input id="{{ q.option1 }}" type="radio" name="{{ forloop.counter }}" value="{{ q.option1 }}"
-                class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
-                aria-labelledby="{{ q.option1 }}" aria-describedby="{{ q.option1 }}">
-            <label for="{{ q.option1 }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                {{ q.option1 }}
-            </label>
-        </div>
+            <div class="flex items-center mb-4">
+                <input id="{{ q.option1 }}" type="radio" name="{{ forloop.counter }}" value="{{ q.option1 }}"
+                    class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                    aria-labelledby="{{ q.option1 }}" aria-describedby="{{ q.option1 }}">
+                <label for="{{ q.option1 }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {{ q.option1 }}
+                </label>
+            </div>
 
-        <div class="flex items-center mb-4">
-            <input id="{{ q.option2 }}" type="radio" name="{{ forloop.counter }}" value="{{ q.option2 }}"
-                class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
-                aria-labelledby="{{ q.option2 }}" aria-describedby="{{ q.option2 }}">
-            <label for="{{ q.option2 }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                {{ q.option2 }}
-            </label>
-        </div>
+            <div class="flex items-center mb-4">
+                <input id="{{ q.option2 }}" type="radio" name="{{ forloop.counter }}" value="{{ q.option2 }}"
+                    class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                    aria-labelledby="{{ q.option2 }}" aria-describedby="{{ q.option2 }}">
+                <label for="{{ q.option2 }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {{ q.option2 }}
+                </label>
+            </div>
 
-        <div class="flex items-center mb-4">
-            <input id="{{ q.option3 }}" type="radio" name="{{ forloop.counter }}" value="{{ q.option3 }}"
-                class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:bg-gray-700 dark:border-gray-600"
-                aria-labelledby="{{ q.option3 }}" aria-describedby="{{ q.option3 }}">
-            <label for="{{ q.option3 }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                {{ q.option3 }}
-            </label>
-        </div>
+            <div class="flex items-center mb-4">
+                <input id="{{ q.option3 }}" type="radio" name="{{ forloop.counter }}" value="{{ q.option3 }}"
+                    class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                    aria-labelledby="{{ q.option3 }}" aria-describedby="{{ q.option3 }}">
+                <label for="{{ q.option3 }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {{ q.option3 }}
+                </label>
+            </div>
 
-        <div class="flex items-center mb-4">
-            <input id="{{ q.option4 }}" type="radio" name="{{ forloop.counter }}" value="{{ q.option4 }}"
-                class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring:blue-300 dark:focus-ring-blue-600 dark:bg-gray-700 dark:border-gray-600"
-                aria-labelledby="{{ q.option4 }}" aria-describedby="{{ q.option4 }}">
-            <label for="{{ q.option4 }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                {{ q.option4 }}
-            </label>
-        </div>
-    </fieldset>
+            <div class="flex items-center mb-4">
+                <input id="{{ q.option4 }}" type="radio" name="{{ forloop.counter }}" value="{{ q.option4 }}"
+                    class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring:blue-300 dark:focus-ring-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                    aria-labelledby="{{ q.option4 }}" aria-describedby="{{ q.option4 }}">
+                <label for="{{ q.option4 }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {{ q.option4 }}
+                </label>
+            </div>
+        </fieldset>
 
-    {% endfor %}
+        {% endfor %}
 
-    <input type="submit"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-        value="Завершити">
-</form>
+        <input type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            value="Завершити">
+    </form>
 
-<script>
-    function saveAnswers() {
-        let element = document.getElementsByTagName('input');
-        for (let i = 0; i < element.length; i++) {
-            if (element[i].type === "radio") {
-                if (element[i].checked) {
-                    setCookie(element[i].name, element[i].value, 3);
+    <script>
+        function saveAnswers() {
+            let element = document.getElementsByTagName('input');
+            for (let i = 0; i < element.length; i++) {
+                if (element[i].type === "radio") {
+                    if (element[i].checked) {
+                        setCookie(element[i].name, element[i].value, 3);
+                    }
                 }
             }
         }
-    }
 
-    function setCookie(name, value, expireDays) {
-        let date = new Date();
-        date.setTime(date.getTime() + (expireDays * 24 * 60 * 60 * 1000));
-        const expries = "expries=" + date.toUTCString;
-        document.cookie = name + "=" + value + ";" + expries + ";path=/"
-    }
-</script>
+        function setCookie(name, value, expireDays) {
+            let date = new Date();
+            date.setTime(date.getTime() + (expireDays * 24 * 60 * 60 * 1000));
+            const expries = "expries=" + date.toUTCString;
+            document.cookie = name + "=" + value + ";" + expries + ";path=/"
+        }
+    </script>
+</div>
 
 {% endblock %}

@@ -31,10 +31,6 @@ class UserDashboardView(UserMixin, generic.ListView):
     model = Language
 
 
-class LanguageView(UserMixin, generic.DetailView):
-    template_name = 'user/language.html'
-    model = Language
-
 
 def is_user(user):
     return not user.is_superuser
