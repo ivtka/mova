@@ -19,7 +19,7 @@ class HomeView(View):
 class DashboardView(View):
     def get(self, request: HttpRequest):
         if request.user.is_superuser:
-            return redirect('admin')
+            return redirect('admin/')
         return redirect('user-dashboard')
 
 
