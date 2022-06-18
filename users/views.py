@@ -31,7 +31,6 @@ class UserDashboardView(UserMixin, generic.ListView):
     model = Language
 
 
-
 def is_user(user):
     return not user.is_superuser
 
@@ -52,9 +51,6 @@ def start_test(request, pk):
 def calculate_level_view(request: HttpRequest):
     if request.COOKIES.get('language_id') is not None:
         result, precentage = save_level_result(request)
-
-        send_mail('Ваш результ з тесту', str(result.level), 'movasite@gmail.com', [request.user.email],
-                  fail_silently=False)
 
         response = render(request, 'user/result.html',
                           {'result': result, 'precentage': precentage})
