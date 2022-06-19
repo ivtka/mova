@@ -4,8 +4,6 @@ from typing import Tuple
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.db.models import Avg
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -82,10 +80,12 @@ def calculate_level(request, language):
     questions = language.get_questions()
     results = 0
     for i in range(len(questions)):
-        selected_answer = request.COOKIES.get(str(i + 1))
+        selected_answer = request.POST.get(str(i + 1))
         correct_answer = questions[i].answer
 
-        options = {'Option1': questions[i].option1, 'Option2': questions[i].option2, 'Option3': questions[i].option3,
+        options = {'Option1': questions[i].option1,
+                   'Option2': questions[i].option2,
+                   'Option3': questions[i].option3,
                    'Option4': questions[i].option4}
 
         results += selected_answer == options[correct_answer]
@@ -96,6 +96,7 @@ def calculate_level(request, language):
 def get_level(scores: int) -> Tuple[str, int]:
     level = 'A1'
     precentage = 100
+    print(scores)
 
     if scores >= 1 and scores <= 20:
         level = 'A1'
